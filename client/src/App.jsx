@@ -5,9 +5,13 @@ import Footer from './components/Footer'
 import Home from './pages/Home'
 import AdminLogin from './components/AdminLogin'
 import AdminRoute from './components/AdminRoute'
-
-// We will create Dashboard in the next step
-const DashboardPlaceholder = () => <div className="min-h-screen bg-dark text-white p-10 text-center">Dashboard Coming Soon...</div>
+import Products from './pages/Products'
+import ProductDetails from './pages/ProductDetails'
+import About from './pages/About'
+import Contact from './pages/Contact'
+import Cart from './pages/Cart'
+import AdminDashboard from './pages/AdminDashboard'
+import Checkout from './pages/Checkout'
 
 function App() {
   return (
@@ -29,9 +33,15 @@ function App() {
           <Route path="/admin/login" element={<AdminLogin />} />
           
           {/* Protected Admin Routes */}
+          <Route path="/products" element={<><Navbar /><Products /><Footer /></>} />
+          <Route path="/products/:slug" element={<><Navbar /><ProductDetails /><Footer /></>} />
+          <Route path="/about" element={<><Navbar /><About /><Footer /></>} />
+          <Route path="/contact" element={<><Navbar /><Contact /><Footer /></>} />
+          <Route path="/cart" element={<><Navbar /><Cart /><Footer /></>} />
+          <Route path="/checkout" element={<><Navbar /><Checkout /><Footer /></>} />
           <Route path="/admin/dashboard" element={
             <AdminRoute>
-              <DashboardPlaceholder />
+              <AdminDashboard />
             </AdminRoute>
           } />
         </Routes>

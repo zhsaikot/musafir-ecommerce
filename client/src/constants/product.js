@@ -1,0 +1,1 @@
+export const fallbackImage = 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=900'
