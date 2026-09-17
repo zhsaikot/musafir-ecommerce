@@ -9,6 +9,7 @@ const Products = () => {
   const [products, setProducts] = useState([])
   const [query, setQuery] = useState('')
   const [category, setCategory] = useState('all')
+  const [sort, setSort] = useState('newest')
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
 
@@ -19,11 +20,30 @@ const Products = () => {
       .finally(() => setLoading(false))
   }, [])
 
-  const filteredProducts = useMemo(() => products.filter((product) => {
-    const matchesCategory = category === 'all' || product.category === category
-    const search = query.toLowerCase()
-    return matchesCategory && (!search || `${product.name} ${product.description} ${(product.tags || []).join(' ')}`.toLowerCase().includes(search))
-  }), [products, query, category])
+  const filteredProducts = useMemo(() => {
+    const normalized = products.filter((product) => {
+      const matchesCategory = category === 'all' || product.category === category
+      const search = query.toLowerCase()
+      return matchesCategory && (!search || `${product.name} ${product.description} ${(product.tags || []).join(' ')}`.toLowerCase().includes(search))
+    })
+
+    const sorted = [...normalized]
+    switch (sort) {
+      case 'low-price':
+        sorted.sort((a, b) => a.price - b.price)
+        break
+      case 'high-price':
+        sorted.sort((a, b) => b.price - a.price)
+        break
+      case 'rating':
+        sorted.sort((a, b) => (b.rating || 0) - (a.rating || 0))
+        break
+      default:
+        sorted.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0))
+    }
+
+    return sorted
+  }, [products, query, category, sort])
 
   return (
     <main className="min-h-screen bg-dark px-4 pb-24 pt-16 text-white sm:px-6 lg:px-8">
@@ -38,9 +58,17 @@ const Products = () => {
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" size={18} />
             <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search the collection" className="w-full rounded-full border border-white/10 bg-white/5 py-3 pl-11 pr-4 text-white outline-none focus:border-primary" />
           </div>
-          <div className="flex items-center gap-2 overflow-x-auto pb-1">
-            <SlidersHorizontal size={17} className="mr-2 shrink-0 text-primary" />
-            {categories.map((item) => <button key={item} onClick={() => setCategory(item)} className={`whitespace-nowrap rounded-full px-4 py-2 text-sm capitalize transition ${category === item ? 'bg-primary font-bold text-dark' : 'bg-white/5 text-gray-400 hover:text-white'}`}>{item.replace('-', ' ')}</button>)}
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+            <div className="flex items-center gap-2 overflow-x-auto pb-1">
+              <SlidersHorizontal size={17} className="mr-2 shrink-0 text-primary" />
+              {categories.map((item) => <button key={item} onClick={() => setCategory(item)} className={`whitespace-nowrap rounded-full px-4 py-2 text-sm capitalize transition ${category === item ? 'bg-primary font-bold text-dark' : 'bg-white/5 text-gray-400 hover:text-white'}`}>{item.replace('-', ' ')}</button>)}
+            </div>
+            <select value={sort} onChange={(event) => setSort(event.target.value)} className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white outline-none focus:border-primary">
+              <option value="newest" className="bg-dark">Newest</option>
+              <option value="low-price" className="bg-dark">Price: Low to high</option>
+              <option value="high-price" className="bg-dark">Price: High to low</option>
+              <option value="rating" className="bg-dark">Top rated</option>
+            </select>
           </div>
         </div>
         {loading && <p className="py-24 text-center text-gray-400">Loading the collection...</p>}
