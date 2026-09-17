@@ -1,4 +1,5 @@
-import { Phone, Mail, MapPin } from 'lucide-react'
+import { Phone, Mail, MapPin, ShieldCheck } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 const Footer = () => {
   return (
@@ -7,7 +8,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Brand */}
           <div>
-            <h3 className="text-2xl font-bold mb-4 text-primary">MUSAFIR</h3>
+            <img src="/MUSAFIR-BRAND-LOGO.webp" alt="MUSAFIR Islamic Lifestyle" className="mb-4 h-16 w-auto max-w-[230px] object-contain object-left" />
             <p className="text-gray-300">
               Islamic Lifestyle & Smart Products Brand
             </p>
@@ -41,6 +42,9 @@ const Footer = () => {
             <p className="text-gray-400 text-sm">
               Coming Soon - Facebook & Instagram
             </p>
+            <Link to="/admin/login" className="mt-5 inline-flex items-center gap-2 text-xs text-gray-500 transition hover:text-primary">
+              <ShieldCheck size={14} /> Studio login
+            </Link>
           </div>
         </div>
 

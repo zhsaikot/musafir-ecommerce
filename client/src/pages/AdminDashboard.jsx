@@ -139,7 +139,7 @@ const AdminDashboard = () => {
     <main className="min-h-screen bg-dark px-4 pb-20 pt-8 text-white sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
         <header className="flex flex-col justify-between gap-5 border-b border-white/10 pb-8 sm:flex-row sm:items-end">
-          <div><p className="text-xs font-bold uppercase tracking-[0.3em] text-primary">MUSAFIR / STUDIO</p><h1 className="mt-3 text-3xl font-bold sm:text-4xl">Inventory workspace</h1><p className="mt-2 text-sm text-gray-500">Manage what is available, visible, and ready to ship.</p></div>
+          <div><img src="/MUSAFIR-BRAND-LOGO.webp" alt="MUSAFIR Islamic Lifestyle" className="h-14 w-auto max-w-[210px] object-contain object-left" /><p className="mt-4 text-xs font-bold uppercase tracking-[0.3em] text-primary">MUSAFIR / STUDIO</p><h1 className="mt-3 text-3xl font-bold sm:text-4xl">Inventory workspace</h1><p className="mt-2 text-sm text-gray-500">Manage what is available, visible, and ready to ship.</p></div>
           <div className="flex items-center gap-3"><Link to="/products" className="inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-sm text-gray-300 hover:border-primary hover:text-white"><ExternalLink size={15} /> View store</Link><button onClick={logout} className="inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-sm text-gray-300 hover:border-red-300 hover:text-red-200"><LogOut size={15} /> Sign out</button></div>
         </header>
 

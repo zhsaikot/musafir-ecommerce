@@ -36,7 +36,7 @@ const AdminLogin = () => {
     <div className="min-h-screen bg-dark flex items-center justify-center p-4">
       <div className="bg-dark-light border border-gray-800 p-8 rounded-2xl w-full max-w-md">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-primary mb-2">MUSAFIR</h1>
+          <img src="/MUSAFIR-BRAND-LOGO.webp" alt="MUSAFIR Islamic Lifestyle" className="mx-auto mb-5 h-20 w-auto max-w-[290px] object-contain" />
           <h2 className="text-xl text-white font-semibold">Admin Portal</h2>
           <p className="text-gray-400 text-sm mt-2">Sign in to manage your store</p>
         </div>
