@@ -8,7 +8,7 @@ const Navbar = () => {
   const cartCount = cartState.state.items.reduce((total, item) => total + item.quantity, 0)
 
   return (
-    <nav className="bg-dark text-white shadow-md sticky top-0 z-50 border-b border-primary/20">
+    <nav className="sticky top-0 z-50 border-b border-primary/40 bg-[#f6f0e3] text-dark shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
@@ -18,10 +18,10 @@ const Navbar = () => {
 
           {/* Desktop Menu */}
           <div className="hidden items-center space-x-7 md:flex">
-            <Link to="/products" className="text-gray-300 transition hover:text-primary">Shop</Link>
-            <Link to="/about" className="text-gray-300 transition hover:text-primary">About</Link>
-            <Link to="/contact" className="text-gray-300 transition hover:text-primary">Contact</Link>
-            <Link to="/cart" className="relative rounded-full border border-white/10 p-2 text-gray-300 transition hover:border-primary hover:text-primary" aria-label="Shopping bag"><ShoppingBag size={19} />{cartCount > 0 && <span className="absolute -right-2 -top-2 flex h-5 min-w-5 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-bold text-dark">{cartCount}</span>}</Link>
+            <Link to="/products" className="text-gray-700 transition hover:text-primary-dark">Shop</Link>
+            <Link to="/about" className="text-gray-700 transition hover:text-primary-dark">About</Link>
+            <Link to="/contact" className="text-gray-700 transition hover:text-primary-dark">Contact</Link>
+            <Link to="/cart" className="relative rounded-full border border-dark/20 p-2 text-dark transition hover:border-primary hover:text-primary-dark" aria-label="Shopping bag"><ShoppingBag size={19} />{cartCount > 0 && <span className="absolute -right-2 -top-2 flex h-5 min-w-5 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-bold text-dark">{cartCount}</span>}</Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -36,10 +36,10 @@ const Navbar = () => {
         {/* Mobile Menu */}
         {isOpen && (
           <div className="md:hidden pb-4">
-            <Link to="/products" onClick={() => setIsOpen(false)} className="block py-2 text-gray-300 hover:text-primary">Shop</Link>
-            <Link to="/about" onClick={() => setIsOpen(false)} className="block py-2 text-gray-300 hover:text-primary">About</Link>
-            <Link to="/contact" onClick={() => setIsOpen(false)} className="block py-2 text-gray-300 hover:text-primary">Contact</Link>
-            <Link to="/cart" onClick={() => setIsOpen(false)} className="mt-3 flex items-center gap-2 text-gray-300 hover:text-primary"><ShoppingBag size={17} /> Shopping bag ({cartCount})</Link>
+            <Link to="/products" onClick={() => setIsOpen(false)} className="block py-2 text-gray-700 hover:text-primary-dark">Shop</Link>
+            <Link to="/about" onClick={() => setIsOpen(false)} className="block py-2 text-gray-700 hover:text-primary-dark">About</Link>
+            <Link to="/contact" onClick={() => setIsOpen(false)} className="block py-2 text-gray-700 hover:text-primary-dark">Contact</Link>
+            <Link to="/cart" onClick={() => setIsOpen(false)} className="mt-3 flex items-center gap-2 text-gray-700 hover:text-primary-dark"><ShoppingBag size={17} /> Shopping bag ({cartCount})</Link>
           </div>
         )}
       </div>
