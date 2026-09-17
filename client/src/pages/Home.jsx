@@ -1,63 +1,69 @@
-import { 
-  Truck, Shield, Monitor, Bluetooth, Bell, Battery, 
-  Droplets, Hash, Star, BadgeCheck 
-} from 'lucide-react'
-
-// Import the new sections we created
-import Pricing from '../components/Pricing'
-import FAQ from '../components/FAQ'
-import OrderForm from '../components/OrderForm'
+import { useEffect, useState } from 'react'
+import { ArrowRight, ShoppingBag, Star, Truck, Shield, BadgeCheck } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import api from '../api/axios'
+import ProductCard from '../components/ProductCard'
 
 const Home = () => {
+  const [featuredProducts, setFeaturedProducts] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    api.get('/products')
+      .then(({ data }) => {
+        // Get first 4 products as featured
+        setFeaturedProducts(data.slice(0, 4))
+      })
+      .catch(console.error)
+      .finally(() => setLoading(false))
+  }, [])
+
   return (
     <div className="bg-dark min-h-screen">
       
       {/* ===== 1. HERO SECTION ===== */}
-      <section className="bg-dark text-white py-20 relative overflow-hidden">
+      <section className="bg-gradient-to-br from-dark via-dark-light to-dark text-white py-24 md:py-32 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-80 h-80 bg-primary/5 rounded-full blur-3xl"></div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>
-              <h1 className="text-4xl md:text-6xl font-bold mb-6 text-white">
-                Digital Tasbih <span className="text-primary">Ring</span>
+              <span className="text-primary font-bold tracking-wider uppercase text-sm mb-4 block">Welcome to Musafir</span>
+              <h1 className="text-4xl md:text-6xl font-bold mb-6 text-white leading-tight">
+                Islamic Products for the <span className="text-primary">Modern Muslim</span>
               </h1>
               <p className="text-xl mb-4 text-gray-300">
-                Track Your Dhikr Anywhere
+                Discover thoughtful tools and gifts designed around prayer, presence, and everyday rituals.
               </p>
               <p className="text-lg mb-8 text-gray-400">
-                Count your Zikr effortlessly with this smart OLED display ring. 
-                Bluetooth enabled, rechargeable, and waterproof.
+                From digital tasbihs to prayer mats, find everything you need to enhance your spiritual journey.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <button 
-                  onClick={() => document.getElementById('order-form').scrollIntoView({ behavior: 'smooth' })}
-                  className="bg-primary hover:bg-primary-dark text-dark px-8 py-3 rounded-lg font-bold text-lg transition shadow-lg shadow-primary/20"
+                <Link 
+                  to="/products"
+                  className="inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-light text-dark px-8 py-4 rounded-full font-bold text-lg transition shadow-lg shadow-primary/20"
                 >
-                  Order Now - ৳1700
-                </button>
-                <button className="border border-primary text-primary hover:bg-primary/10 px-8 py-3 rounded-lg font-bold text-lg transition">
-                  Watch Video
-                </button>
-              </div>
-              <div className="mt-8 flex items-center gap-4 text-sm text-gray-300">
-                <div className="flex items-center gap-2">
-                  <Truck size={16} className="text-primary" />
-                  <span>COD Available</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Shield size={16} className="text-primary" />
-                  <span>1 Year Warranty</span>
-                </div>
+                  <ShoppingBag size={20} />
+                  Shop Now
+                </Link>
+                <Link 
+                  to="/about"
+                  className="inline-flex items-center justify-center gap-2 border border-primary text-primary hover:bg-primary/10 px-8 py-4 rounded-full font-bold text-lg transition"
+                >
+                  Learn More
+                  <ArrowRight size={20} />
+                </Link>
               </div>
             </div>
 
             <div className="flex justify-center">
-              <div className="bg-dark-light p-8 rounded-2xl border border-gray-800">
+              <div className="relative">
+                <div className="absolute inset-0 bg-primary/20 rounded-full blur-3xl"></div>
                 <img 
-                  src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=400" 
-                  alt="Digital Tasbih Ring"
-                  className="w-full max-w-sm rounded-lg"
+                  src="https://images.unsplash.com/photo-1584286595398-a59f22790b49?auto=format&fit=crop&q=80&w=600" 
+                  alt="Islamic Products Collection"
+                  className="relative w-full max-w-md rounded-2xl shadow-2xl border border-gray-800"
                 />
               </div>
             </div>
@@ -65,94 +71,137 @@ const Home = () => {
         </div>
       </section>
 
-      {/* ===== 2. FEATURES SECTION ===== */}
-      <section className="py-20 bg-dark-light">
+      {/* ===== 2. TRUST BADGES ===== */}
+      <section className="py-12 bg-dark-light border-y border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-              Premium <span className="text-primary">Features</span>
-            </h2>
-            <p className="text-gray-400 max-w-2xl mx-auto">
-              Designed for the modern Muslim. Combining faith with smart technology.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <FeatureCard icon={<Monitor size={32} />} title="OLED Display" desc="Bright, clear screen to track your count effortlessly." />
-            <FeatureCard icon={<Bluetooth size={32} />} title="Bluetooth App" desc="Connect to mobile app to track daily Zikr goals." />
-            <FeatureCard icon={<Bell size={32} />} title="Prayer Reminder" desc="Gentle vibration reminders for daily Dhikr." />
-            <FeatureCard icon={<Battery size={32} />} title="Rechargeable" desc="Long-lasting battery. Charge once, use for weeks." />
-            <FeatureCard icon={<Droplets size={32} />} title="Waterproof" desc="Wudu-safe design. Wear it anytime without worry." />
-            <FeatureCard icon={<Hash size={32} />} title="Smart Counter" desc="Accurate digital counting. Never lose track again." />
-          </div>
-        </div>
-      </section>
-
-      {/* ===== 3. PRODUCT SHOWCASE ===== */}
-      <section className="py-20 bg-dark">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-              Elegant <span className="text-primary">Design</span>
-            </h2>
-            <p className="text-gray-400">Crafted for comfort, built for durability.</p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="md:col-span-2 bg-dark-light rounded-2xl overflow-hidden border border-gray-800 h-80 md:h-96 flex items-center justify-center">
-              <img 
-                src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=800" 
-                alt="Product"
-                className="w-full h-full object-cover opacity-80"
-              />
-            </div>
-            <div className="flex flex-col gap-6">
-              <div className="bg-dark-light rounded-2xl overflow-hidden border border-gray-800 h-44 flex items-center justify-center">
-                <img src="https://images.unsplash.com/photo-1590736969955-71cc94901144?auto=format&fit=crop&q=80&w=400" alt="Lifestyle" className="w-full h-full object-cover opacity-80" />
-              </div>
-              <div className="bg-dark-light rounded-2xl overflow-hidden border border-gray-800 h-44 flex items-center justify-center">
-                <img src="https://images.unsplash.com/photo-1584286595398-a59f22790b49?auto=format&fit=crop&q=80&w=400" alt="In Hand" className="w-full h-full object-cover opacity-80" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ===== 4. SOCIAL PROOF ===== */}
-      <section className="py-20 bg-dark-light">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          {/* Trust Badges */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             <TrustBadge icon={<Truck />} title="Fast Delivery" desc="All over Bangladesh" />
-            <TrustBadge icon={<Shield />} title="1 Year Warranty" desc="100% Genuine Product" />
+            <TrustBadge icon={<Shield />} title="1 Year Warranty" desc="100% Genuine Products" />
             <TrustBadge icon={<BadgeCheck />} title="Cash on Delivery" desc="Pay after you receive" />
             <TrustBadge icon={<Star />} title="5000+ Happy Customers" desc="Trusted by Muslims" />
           </div>
+        </div>
+      </section>
 
-          {/* Reviews */}
-          <div className="text-center mb-12">
+      {/* ===== 3. FEATURED PRODUCTS ===== */}
+      <section className="py-20 bg-dark">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <span className="text-primary font-bold tracking-wider uppercase text-sm mb-2 block">Our Collection</span>
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-              What Our <span className="text-primary">Customers</span> Say
+              Featured <span className="text-primary">Products</span>
+            </h2>
+            <p className="text-gray-400 max-w-2xl mx-auto">
+              Handpicked items to enhance your daily worship and spiritual practice.
+            </p>
+          </div>
+
+          {loading ? (
+            <p className="text-center text-gray-400 py-12">Loading products...</p>
+          ) : (
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {featuredProducts.map((product) => (
+                  <ProductCard key={product._id} product={product} />
+                ))}
+              </div>
+              
+              <div className="text-center mt-12">
+                <Link 
+                  to="/products"
+                  className="inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 text-white px-8 py-4 rounded-full font-bold text-lg transition border border-white/10"
+                >
+                  View All Products
+                  <ArrowRight size={20} />
+                </Link>
+              </div>
+            </>
+          )}
+        </div>
+      </section>
+
+      {/* ===== 4. CATEGORIES SECTION ===== */}
+      <section className="py-20 bg-dark-light">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <span className="text-primary font-bold tracking-wider uppercase text-sm mb-2 block">Browse By</span>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              Shop <span className="text-primary">Categories</span>
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <ReviewCard name="Abdullah Rahman" location="Dhaka" text="MashAllah, the build quality is premium. The OLED display is very clear!" rating={5} />
-            <ReviewCard name="Fatima Akter" location="Chittagong" text="Bought it as a gift for my father. He loves it. Highly recommended!" rating={5} />
-            <ReviewCard name="Mohammad Karim" location="Sylhet" text="Fast delivery and genuine product. JazakAllah Khair MUSAFIR!" rating={5} />
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <CategoryCard name="Digital Tasbih" image="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=400" link="/products?category=tasbih" />
+            <CategoryCard name="Prayer Mats" image="https://images.unsplash.com/photo-1584286595398-a59f22790b49?auto=format&fit=crop&q=80&w=400" link="/products?category=prayer-mat" />
+            <CategoryCard name="Islamic Gifts" image="https://images.unsplash.com/photo-1590736969955-71cc94901144?auto=format&fit=crop&q=80&w=400" link="/products?category=islamic-gift" />
+            <CategoryCard name="Accessories" image="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=400" link="/products?category=accessories" />
           </div>
         </div>
       </section>
 
-      {/* ===== 5. PRICING SECTION ===== */}
-      <Pricing />
+      {/* ===== 5. ABOUT PREVIEW ===== */}
+      <section className="py-20 bg-dark">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div className="order-2 md:order-1">
+              <img 
+                src="https://images.unsplash.com/photo-1584286595398-a59f22790b49?auto=format&fit=crop&q=80&w=600" 
+                alt="About Musafir"
+                className="rounded-2xl shadow-2xl border border-gray-800"
+              />
+            </div>
+            <div className="order-1 md:order-2">
+              <span className="text-primary font-bold tracking-wider uppercase text-sm mb-2 block">Our Story</span>
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+                Serving the Muslim <span className="text-primary">Community</span>
+              </h2>
+              <p className="text-gray-300 mb-6 text-lg">
+                Musafir is dedicated to providing high-quality Islamic products that blend tradition with modern technology. We believe in making worship easier and more meaningful for Muslims everywhere.
+              </p>
+              <ul className="space-y-3 mb-8">
+                <li className="flex items-center gap-3 text-gray-300">
+                  <div className="w-2 h-2 bg-primary rounded-full"></div>
+                  Premium quality products
+                </li>
+                <li className="flex items-center gap-3 text-gray-300">
+                  <div className="w-2 h-2 bg-primary rounded-full"></div>
+                  Fast delivery across Bangladesh
+                </li>
+                <li className="flex items-center gap-3 text-gray-300">
+                  <div className="w-2 h-2 bg-primary rounded-full"></div>
+                  Dedicated customer support
+                </li>
+              </ul>
+              <Link 
+                to="/about"
+                className="inline-flex items-center gap-2 text-primary hover:text-primary-light font-bold text-lg transition"
+              >
+                Learn More About Us
+                <ArrowRight size={20} />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
 
-      {/* ===== 6. FAQ SECTION ===== */}
-      <FAQ />
-
-      {/* ===== 7. ORDER FORM SECTION ===== */}
-      <OrderForm />
+      {/* ===== 6. CTA SECTION ===== */}
+      <section className="py-20 bg-gradient-to-r from-primary to-primary-light">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-dark mb-6">
+            Ready to Enhance Your Spiritual Journey?
+          </h2>
+          <p className="text-dark/80 text-lg mb-8 max-w-2xl mx-auto">
+            Browse our collection of premium Islamic products and find the perfect tools for your daily worship.
+          </p>
+          <Link 
+            to="/products"
+            className="inline-flex items-center gap-2 bg-dark hover:bg-dark/80 text-white px-8 py-4 rounded-full font-bold text-lg transition shadow-lg"
+          >
+            <ShoppingBag size={20} />
+            Start Shopping
+          </Link>
+        </div>
+      </section>
 
     </div>
   )
@@ -160,35 +209,26 @@ const Home = () => {
 
 // ===== HELPER COMPONENTS =====
 
-const FeatureCard = ({ icon, title, desc }) => (
-  <div className="bg-dark p-8 rounded-xl border border-gray-800 hover:border-primary/50 transition duration-300 group">
-    <div className="text-primary mb-4 group-hover:scale-110 transition duration-300">{icon}</div>
-    <h3 className="text-xl font-bold text-white mb-2">{title}</h3>
-    <p className="text-gray-400">{desc}</p>
-  </div>
-)
-
 const TrustBadge = ({ icon, title, desc }) => (
   <div className="flex flex-col items-center text-center p-4">
-    <div className="text-primary mb-2">{icon}</div>
-    <h4 className="text-white font-bold">{title}</h4>
+    <div className="text-primary mb-3">{icon}</div>
+    <h4 className="text-white font-bold mb-1">{title}</h4>
     <p className="text-gray-400 text-sm">{desc}</p>
   </div>
 )
 
-const ReviewCard = ({ name, location, text, rating }) => (
-  <div className="bg-dark p-6 rounded-xl border border-gray-800">
-    <div className="flex text-primary mb-4">
-      {[...Array(rating)].map((_, i) => (
-        <Star key={i} size={16} fill="currentColor" />
-      ))}
+const CategoryCard = ({ name, image, link }) => (
+  <Link to={link} className="group relative overflow-hidden rounded-2xl aspect-square">
+    <img 
+      src={image} 
+      alt={name}
+      className="w-full h-full object-cover group-hover:scale-110 transition duration-500"
+    />
+    <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/50 to-transparent"></div>
+    <div className="absolute bottom-0 left-0 right-0 p-6">
+      <h3 className="text-xl font-bold text-white group-hover:text-primary transition">{name}</h3>
     </div>
-    <p className="text-gray-300 mb-6 italic">"{text}"</p>
-    <div>
-      <h4 className="text-white font-bold">{name}</h4>
-      <p className="text-gray-500 text-sm">{location}</p>
-    </div>
-  </div>
+  </Link>
 )
 
 export default Home
