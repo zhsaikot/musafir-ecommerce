@@ -19,4 +19,6 @@ cd server
 npm run create-admin
 ```
 
+Alternatively, from the `server` directory run `npm run setup-admin` and answer the local prompts. This writes the ignored `server/.env` file for you.
+
 Start the API with `npm run dev` in `server`, and start the storefront with `npm run dev` in `client`. The client uses `VITE_API_URL` when provided, otherwise it connects to `http://localhost:5000/api`.
