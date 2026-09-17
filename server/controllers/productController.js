@@ -10,6 +10,16 @@ export const getProducts = async (req, res) => {
   }
 };
 
+// @desc    Get the complete catalog for admin inventory management
+export const getAdminProducts = async (req, res) => {
+  try {
+    const products = await Product.find({}).sort('-updatedAt');
+    res.json(products);
+  } catch (error) {
+    res.status(500).json({ message: 'সার্ভার এরর', error: error.message });
+  }
+};
+
 // @desc    Get single product by slug
 export const getProductBySlug = async (req, res) => {
   try {
