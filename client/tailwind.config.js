@@ -14,8 +14,8 @@ export default {
           dark: '#997a00',
         },
         dark: {
-          DEFAULT: '#050505', // Deep Black (Logo Background)
-          light: '#1a1a1a',   // Slightly lighter black for cards/sections
+          DEFAULT: '#111416', // Charcoal from the MUSAFIR wordmark
+          light: '#202427',   // Elevated charcoal surfaces
         },
         gold: {
           DEFAULT: '#d4af37',

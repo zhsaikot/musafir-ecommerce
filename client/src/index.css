@@ -6,8 +6,21 @@ html {
   scroll-behavior: smooth;
 }
 
+:root {
+  color-scheme: light;
+  --musafir-cream: #f6f0e3;
+  --musafir-ink: #17202a;
+  --musafir-gold: #d4af37;
+}
+
 body {
   font-family: 'Inter', sans-serif;
-  background-color: #f8fafc; /* Keep light for product sections, we will use dark for Hero */
-  color: #0f172a;
+  background-color: var(--musafir-cream);
+  color: var(--musafir-ink);
+  margin: 0;
+}
+
+::selection {
+  background: var(--musafir-gold);
+  color: var(--musafir-ink);
 }

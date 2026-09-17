@@ -9,3 +9,14 @@ The frontend is configured for Netlify in `netlify.toml`.
 3. Deploy. Netlify will run the client build and publish `client/dist`.
 
 The API must be deployed separately because it is an Express server. Keep its database and service credentials in the server host's environment variables, not in Git.
+
+## Admin login
+
+The admin login is available at `/admin/login`. New registrations are regular customer accounts by design. To create or promote the admin account, copy `server/.env.example` to `server/.env`, fill in the MongoDB and admin values, then run:
+
+```bash
+cd server
+npm run create-admin
+```
+
+Start the API with `npm run dev` in `server`, and start the storefront with `npm run dev` in `client`. The client uses `VITE_API_URL` when provided, otherwise it connects to `http://localhost:5000/api`.

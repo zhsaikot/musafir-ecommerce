@@ -26,31 +26,35 @@ const AdminLogin = () => {
         toast.error('Access Denied. Admins only.')
       }
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Login failed')
+      if (!error.response) {
+        toast.error('Cannot reach the store server. Start the API or check VITE_API_URL.')
+      } else {
+        toast.error(error.response.data?.message || 'Login failed')
+      }
     } finally {
       setLoading(false)
     }
   }
 
   return (
-    <div className="min-h-screen bg-dark flex items-center justify-center p-4">
-      <div className="bg-dark-light border border-gray-800 p-8 rounded-2xl w-full max-w-md">
+    <div className="flex min-h-screen items-center justify-center bg-[#f6f0e3] p-4">
+      <div className="w-full max-w-md rounded-2xl border border-[#d8c99f] bg-[#fffdf7] p-8 shadow-[0_24px_70px_rgba(33,29,19,0.16)]">
         <div className="text-center mb-8">
           <img src="/MUSAFIR-BRAND-LOGO.webp" alt="MUSAFIR Islamic Lifestyle" className="mx-auto mb-5 h-20 w-auto max-w-[290px] object-contain" />
-          <h2 className="text-xl text-white font-semibold">Admin Portal</h2>
-          <p className="text-gray-400 text-sm mt-2">Sign in to manage your store</p>
+          <h2 className="text-xl font-semibold text-[#17202a]">Admin Portal</h2>
+          <p className="mt-2 text-sm text-gray-600">Sign in to manage your store</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-gray-300 mb-2 text-sm font-medium">Email Address</label>
+            <label className="mb-2 block text-sm font-medium text-[#17202a]">Email Address</label>
             <div className="relative">
               <Mail className="absolute left-3 top-3 text-gray-500" size={20} />
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-dark border border-gray-700 rounded-lg pl-10 p-3 text-white focus:ring-2 focus:ring-primary outline-none transition"
+                className="w-full rounded-lg border border-[#c9c0aa] bg-white p-3 pl-10 text-[#17202a] outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30"
                 placeholder="admin@musafir.com"
                 required
               />
@@ -58,14 +62,14 @@ const AdminLogin = () => {
           </div>
 
           <div>
-            <label className="block text-gray-300 mb-2 text-sm font-medium">Password</label>
+            <label className="mb-2 block text-sm font-medium text-[#17202a]">Password</label>
             <div className="relative">
               <Lock className="absolute left-3 top-3 text-gray-500" size={20} />
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-dark border border-gray-700 rounded-lg pl-10 p-3 text-white focus:ring-2 focus:ring-primary outline-none transition"
+                className="w-full rounded-lg border border-[#c9c0aa] bg-white p-3 pl-10 text-[#17202a] outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30"
                 placeholder="••••••••"
                 required
               />
@@ -75,7 +79,7 @@ const AdminLogin = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-primary hover:bg-primary-dark text-dark font-bold py-3 rounded-lg transition flex justify-center items-center gap-2 disabled:opacity-50"
+            className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary py-3 font-bold text-dark transition hover:bg-primary-dark disabled:opacity-50"
           >
             {loading ? <Loader2 className="animate-spin" size={20} /> : 'Sign In'}
           </button>
